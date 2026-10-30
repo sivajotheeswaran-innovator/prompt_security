@@ -64,8 +64,9 @@ export function createApp(): Express {
   // Body parser with 1mb limit
   app.use(express.json({ limit: '1mb' }));
 
-  // Mount API router under /api
+  // Mount API router under /api (and fallback / for clients omitting /api prefix)
   app.use('/api', apiRoutes);
+  app.use('/', apiRoutes);
 
   // 404 handler for unknown routes
   app.use((req, res) => {
