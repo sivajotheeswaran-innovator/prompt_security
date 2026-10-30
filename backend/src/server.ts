@@ -12,9 +12,10 @@ async function bootstrap() {
 
     const app = createApp();
 
-    const server = app.listen(env.PORT, () => {
-      console.log(`[Server] TrustLayer API Gateway running on http://localhost:${env.PORT}`);
-      console.log(`[Server] Health check available at http://localhost:${env.PORT}/api/health`);
+    const port = Number(process.env.PORT) || env.PORT || 5000;
+    const server = app.listen(port, '0.0.0.0', () => {
+      console.log(`[Server] TrustLayer API Gateway running on http://0.0.0.0:${port}`);
+      console.log(`[Server] Health check available at /api/health`);
     });
 
     const shutdown = async () => {
