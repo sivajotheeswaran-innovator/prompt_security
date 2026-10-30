@@ -11,13 +11,13 @@ const envSchema = z.object({
   JWT_SECRET: z.string().optional(),
   JWT_EXPIRES_IN: z.string().default('7d'),
   GEMINI_API_KEY: z.string().optional(),
-  GEMINI_MODEL: z.string().default('gemini-flash-lite-latest'),
+  GEMINI_MODEL: z.string().default('gemini-2.0-flash-lite'),
   GEMINI_DETECTION_MODEL: z.string().optional(),
   GEMINI_CHAT_MODEL: z.string().optional(),
 });
 
 const rawEnv = envSchema.parse(process.env);
-const defaultModel = rawEnv.GEMINI_MODEL || 'gemini-flash-lite-latest';
+const defaultModel = rawEnv.GEMINI_MODEL || 'gemini-2.0-flash-lite';
 
 // Enforce required variables in development and production (Requirement 2)
 if (rawEnv.NODE_ENV !== 'test') {

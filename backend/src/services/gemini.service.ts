@@ -54,7 +54,7 @@ export async function generateChatReply(
     };
   }
 
-  const chatModel = env.GEMINI_CHAT_MODEL || env.GEMINI_MODEL || 'gemini-1.5-flash';
+  const chatModel = env.GEMINI_CHAT_MODEL || env.GEMINI_MODEL || 'gemini-2.0-flash-lite';
   const executeCallWithModel = async (modelName: string) => {
     const model = client.getGenerativeModel({
       model: modelName,
@@ -87,9 +87,9 @@ export async function generateChatReply(
       try {
         return await executeCallWithModel(chatModel);
       } catch (err: any) {
-        if (isQuotaOrRateLimitError(err) && chatModel !== 'gemini-1.5-flash') {
-          console.warn(`[ChatGateway] ${chatModel} quota exhausted. Auto-falling back to gemini-1.5-flash...`);
-          return await executeCallWithModel('gemini-1.5-flash');
+        if (isQuotaOrRateLimitError(err) && chatModel !== 'gemini-2.0-flash-lite') {
+          console.warn(`[ChatGateway] ${chatModel} quota exhausted. Auto-falling back to gemini-2.0-flash-lite...`);
+          return await executeCallWithModel('gemini-2.0-flash-lite');
         }
         throw err;
       }
