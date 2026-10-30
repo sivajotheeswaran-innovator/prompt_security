@@ -22,14 +22,24 @@ export function createApp(): Express {
         // Allow requests with no origin (internal/server-to-server) or matching FRONTEND_URL.
         // Allow localhost and 127.0.0.1 ONLY when NODE_ENV !== 'production' (Requirement 6)
         const isNotProduction = env.NODE_ENV !== 'production';
+        const cleanOrigin = origin?.replace(/\/$/, '');
+        const cleanFrontendUrl = env.FRONTEND_URL?.replace(/\/$/, '');
+
         const isLocalhost = Boolean(
           origin && (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:'))
         );
+        const isVercel = Boolean(origin && origin.endsWith('.vercel.app'));
 
-        if (!origin || origin === env.FRONTEND_URL || (isNotProduction && isLocalhost)) {
+        if (
+          !origin ||
+          cleanOrigin === cleanFrontendUrl ||
+          env.FRONTEND_URL === '*' ||
+          isVercel ||
+          (isNotProduction && isLocalhost)
+        ) {
           callback(null, true);
         } else {
-          callback(new Error('Blocked by CORS policy'));
+          callback(new Error(`Blocked by CORS policy: origin ${origin} not allowed`));
         }
       },
       credentials: true,
