@@ -1,0 +1,8 @@
+- Never store raw sensitive values anywhere (DB, logs, console). Store only masked previews (e.g. XXXX-XXXX-1234) and type/offset/confidence.
+- GEMINI_API_KEY and DB credentials only in backend env. Frontend gets only VITE_API_BASE_URL.
+- Stack is fixed: React+Vite+React Router+Tailwind+Axios+Recharts; Node+Express+JWT+bcrypt+Zod; Supabase Postgres via the `pg` driver (plain Postgres, NOT Supabase Auth); Gemini API. Model name from env GEMINI_MODEL.
+- Validate every request body with Zod. Use helmet, CORS limited to FRONTEND_URL, and rate limiting.
+- Gemini calls must use structured JSON output, parsed with Zod. If Gemini fails or returns invalid JSON, fall back to Layer 1 only and flag "AI layer unavailable". Never crash.
+- Follow docs/spec.md exactly. If something is ambiguous, pick the simplest option and note it in docs/decisions.md. Do not ask me questions mid-build unless blocked.
+- Work in small verifiable steps. After each phase run the acceptance checks and report results.
+- UI: dark security-dashboard feel, clean cards, no placeholder lorem ipsum.

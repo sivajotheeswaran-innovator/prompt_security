@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Production Builds
+dist/
+**/dist/
+build/
+**/build/
+
+# Testing & Coverage
+coverage/
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment & Secrets (NEVER COMMIT)
+**/.env
+**/.env.*
+!**/.env.example
