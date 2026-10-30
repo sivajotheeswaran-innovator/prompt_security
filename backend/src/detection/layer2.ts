@@ -137,7 +137,7 @@ export async function runLayer2(
       return { findings: [], aiLayerOk: false, aiLayerReason: 'key_missing' };
     }
 
-    const detectionModel = env.GEMINI_DETECTION_MODEL || env.GEMINI_MODEL || 'gemini-2.0-flash-lite';
+    const detectionModel = env.GEMINI_DETECTION_MODEL || env.GEMINI_MODEL || 'gemini-3.5-flash-lite';
     const executeLayer2CallWithModel = async (modelName: string) => {
       const model = client.getGenerativeModel({
         model: modelName,
@@ -173,9 +173,9 @@ export async function runLayer2(
         try {
           return await executeLayer2CallWithModel(detectionModel);
         } catch (err: any) {
-          if (isQuotaOrRateLimitError(err) && detectionModel !== 'gemini-2.0-flash-lite') {
-            console.warn(`[Layer2] ${detectionModel} quota exhausted. Auto-falling back to gemini-2.0-flash-lite...`);
-            return await executeLayer2CallWithModel('gemini-2.0-flash-lite');
+          if (isQuotaOrRateLimitError(err) && detectionModel !== 'gemini-3.5-flash-lite') {
+            console.warn(`[Layer2] ${detectionModel} quota exhausted. Auto-falling back to gemini-3.5-flash-lite...`);
+            return await executeLayer2CallWithModel('gemini-3.5-flash-lite');
           }
           throw err;
         }
